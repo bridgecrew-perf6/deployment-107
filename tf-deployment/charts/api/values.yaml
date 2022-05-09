@@ -1,0 +1,46 @@
+# Initial Replicas
+replicaCount: 2
+# Docker Settings.
+image:
+    repository: ghcr.io/the-bob/fast-api
+    pullPolicy: Always
+    tag: latest_main
+# Auto-Scalling Settings via HPA
+autoscaling:
+    enabled: true
+    targetCPUUtilizationPercentage: 90
+    targetMemoryUtilizationPercentage: 90
+    maxReplicas: 5
+    minReplicas: 2
+# Pod Resources
+resources:
+    limits:
+        cpu: 100m
+        memory: 128Mi
+    requests:
+        cpu: 100m
+        memory: 128Mi
+# Ingress
+ingress:
+    enabled: true
+    hosts:
+        - paths:
+            - path: /
+              pathType: Prefix
+              port:
+                number: 80
+        - paths:
+            - path: /*
+              pathType: Prefix
+              port:
+                number: 80
+    annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+        
+# Config Map
+config:
+    values:
+      DB_NAME: apidb
+      DB_HOST: apidb.default.svc.cluster.local
