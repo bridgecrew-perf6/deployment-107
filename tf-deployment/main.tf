@@ -3,7 +3,7 @@
 ##################################################
 
 module "datadog" {
-  source = "git::https://github.com/the-bob/helm-module.git?rev=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
 
   name = "datadog"
 
@@ -29,7 +29,7 @@ module "datadog" {
 ##################################################
 
 module "ingress" {
-  source = "git::https://github.com/the-bob/helm-module.git?rev=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
 
   name = "ingress-nginx"
 
@@ -46,7 +46,7 @@ module "ingress" {
 ##################################################
 
 module "database" {
-  source = "git::https://github.com/the-bob/helm-module.git?rev=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
 
   name = "database"
 
@@ -66,7 +66,7 @@ module "database" {
 
 module "api" {
 
-  source = "git::https://github.com/the-bob/helm-module.git?rev=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
 
   name = "api"
 
@@ -87,7 +87,7 @@ module "api" {
 ##################################################
 
 module "argocd" {
-  source = "git::https://github.com/the-bob/helm-module.git?rev=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
 
   name = "argocd"
 
@@ -108,7 +108,7 @@ module "argocd" {
 
 module "db_tunneller" {
   count  = var.install_db_tunneller ? 1 : 0
-  source = "git::https://github.com/the-bob/helm-module.git?rev=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
 
   name = "db-tunneller"
 
