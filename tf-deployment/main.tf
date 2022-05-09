@@ -116,7 +116,7 @@ module "db_tunneller" {
   create_namespace = true
 
   repository    = "https://charts.helm.sh/stable/"
-  chart_name    = "database"
+  chart_name    = "socat-tunneller"
   chart_version = "0.1.2"
 
   set = [
