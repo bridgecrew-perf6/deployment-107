@@ -159,7 +159,11 @@ terraform apply
     * run `minikube tunnel` on a separate terminal
     * get url 
         * `minikube service --url ingress-nginx-controller` and copy & paste the output to the browser OR
+            * ![plot](./images/minikube-get-endpoint.png)
+            * ![plot](./images/test-1.png)
         * `kubectl get svc | grep ingress-nginx-controller | grep -v '<none>' | awk '{print $4}'` and copy & and copy & paste the output to the browser
+            * ![plot](./images/kubectl-get-endpoint.png)
+            * ![plot](./images/test-2.png)
 
 * To Clean 
 ```sh
