@@ -97,6 +97,7 @@ This calls out to the different Projects, Repositories, Registries and Chartmuse
 * [Datadog](https://github.com/DataDog/helm-charts)
 * [MariaDB](https://github.com/helm/charts/tree/master/stable/mariadb)
 * [ArgoCD](https://github.com/argoproj/argo-helm/tree/master/charts/argo-cd)
+* [Socat Tunneller](https://artifacthub.io/packages/helm/isotoma/socat-tunneller)
 * API
     * Configurations are set in the `tf-deployment/charts/api/`
     * Ingress Enabled with Nginx to wire-up with the ingress-nginx controller

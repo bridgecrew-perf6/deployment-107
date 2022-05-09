@@ -85,6 +85,7 @@ module "api" {
 ##################################################
 # Argo CD
 ##################################################
+
 module "argocd" {
   source = "git::https://github.com/the-bob/helm-module.git"
 
@@ -100,5 +101,34 @@ module "argocd" {
   values_files = ["charts/argocd/values.yaml"]
 }
 
+
+##################################################
+# DB Tunneller for DEV
+##################################################
+
+module "db_tunneller" {
+  count  = var.install_db_tunneller ? 1 : 0
+  source = "git::https://github.com/the-bob/helm-module.git"
+
+  name = "db-tunneller"
+
+  namespace        = "database"
+  create_namespace = true
+
+  repository    = "https://charts.helm.sh/stable/"
+  chart_name    = "socat-tunneller"
+  chart_version = "0.1.2"
+
+  set = [
+    {
+      name  = "tunnel.host"
+      value = "apidb.default.svc.cluster.local"
+    },
+    {
+      name  = "tunnel.port"
+      value = "3306"
+    },
+  ]
+}
 
 
