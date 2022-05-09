@@ -1,0 +1,29 @@
+name: Docker and Terraform Minikube
+
+on:
+  push:
+    branches: [ main, feature/* ]    
+  pull_request:
+    branches: [ feature/* ]
+
+  workflow_dispatch: 
+
+jobs:
+  create-api-image:
+    uses: the-bob/github-workflows/.github/workflows/docker-ghcr.yml@main
+    with:
+      context: api
+      image_name: fast-api
+      org: the-bob
+      username: ${{ github.repository_owner }}
+      push: true
+    secrets:  
+      password: ${{ secrets.GH_PAT }}
+
+  deploy:
+    uses: the-bob/github-workflows/.github/workflows/terraform-minikube.yml@main
+    with:
+      working_dir: tf-deployment
+      gpg_key: true
+    secrets:
+      gpg_private_key: ${{ secrets.GPG_KEY }}

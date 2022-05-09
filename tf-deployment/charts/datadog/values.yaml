@@ -1,0 +1,23 @@
+targetSystem: "linux"
+datadog:
+  apiKey: thereIsNoHashHereActually
+  appKey: justSomeDummyHashHere
+  clusterName: <CLUSTER_NAME>
+  tags: []
+  kubelet:
+    tlsVerify: "false"
+  logs:
+    enabled: true
+    containerCollectAll: false
+    containerCollectUsingFiles: true
+  apm:
+    portEnabled: true
+    socketPath: /var/run/datadog/apm.socket
+    hostSocketPath: /var/run/datadog/
+  processAgent:
+    enabled: true
+    processCollection: false
+  systemProbe:
+    enableTCPQueueLength: false
+    enableOOMKill: true
+    collectDNSStats: false
