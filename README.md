@@ -23,6 +23,7 @@ Softwares required:
 | minikube | v1.25.2 |
 | gpg | 2.3.6 |
 | kubectl | v1.22.5 |
+| Docker Desktop | 4.7.1 |
 
 # Repository Structure and Dependencies
 
