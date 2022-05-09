@@ -3,7 +3,7 @@ terraform {
     secret_suffix = "state"
     config_path   = "~/.kube/config"
   }
-  
+
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
