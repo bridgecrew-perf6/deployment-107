@@ -177,6 +177,15 @@ minikube delete
 # Paranoid Scenario
 ps -ef | grep minikube | awk '{print $2}' | xargs kill -9
 ```
+
+<hr>
+
+# Further work can be added:
+
+* Remove the `api` deployment here and use `ArgoCD` via `GitOps`
+* Add in the full capabilites of `ArgoCD` in the `argocd/values.yaml` etc.
+
+<br>
 <br>
 <hr>
 
