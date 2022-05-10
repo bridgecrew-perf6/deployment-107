@@ -159,13 +159,16 @@ terraform apply
 
 * To Access via localhost
     * run `minikube tunnel` on a separate terminal
-    * get url 
-        * `minikube service --url ingress-nginx-controller` and copy & paste the output to the browser OR
-            * ![plot](./images/minikube-get-endpoint.png)
-            * ![plot](./images/test-1.png)
-        * `kubectl get svc | grep ingress-nginx-controller | grep -v '<none>' | awk '{print $4}'` and copy & and copy & paste the output to the browser
-            * ![plot](./images/kubectl-get-endpoint.png)
-            * ![plot](./images/test-2.png)
+    * access via curl
+    ```sh
+    % curl -H "Host: api.localhost" http://127.0.0.1
+    {"Hello":"World"}%
+    ```
+    * access via browser
+        * if you're using chrome, add the extension [ModHeader](https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj/related?hl=en)
+        * set the header to <br>![plot](./images/modheader.png)
+        * access via browser `http://127.0.0.1` <br>![plot](./images/api-access.png)
+
 
 * To Clean 
 ```sh

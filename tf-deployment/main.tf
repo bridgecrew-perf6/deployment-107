@@ -3,7 +3,7 @@
 ##################################################
 
 module "datadog" {
-  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.2.0"
 
   name = "datadog"
 
@@ -29,7 +29,7 @@ module "datadog" {
 ##################################################
 
 module "ingress" {
-  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.2.0"
 
   name = "ingress-nginx"
 
@@ -39,14 +39,17 @@ module "ingress" {
   chart_name    = "ingress-nginx"
   chart_version = "4.0.18"
   wait          = false
+
+  wait_in_seconds = 180
 }
+
 
 ##################################################
 # Maria DB Database
 ##################################################
 
 module "database" {
-  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.2.0"
 
   name = "database"
 
@@ -55,7 +58,7 @@ module "database" {
 
   repository    = "https://charts.bitnami.com/bitnami/"
   chart_name    = "mariadb"
-  chart_version = "11.0.2"
+  chart_version = var.mariadb_charts_version
 
   secret_files = [base64decode(data.external.helm-secrets-db.result.content_base64)]
 }
@@ -65,8 +68,11 @@ module "database" {
 ##################################################
 
 module "api" {
-
-  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
+  depends_on = [
+    module.ingress,
+    module.database
+  ]
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.2.0"
 
   name = "api"
 
@@ -79,7 +85,16 @@ module "api" {
 
   values_files = ["charts/api/values.yaml"]
   secret_files = [base64decode(data.external.helm-secrets-api.result.content_base64)]
-
+  set = [
+    {
+      name  = "ingress.hosts[0].host"
+      value = var.api_host
+    },
+    {
+      name  = "ingress.hosts[1].host"
+      value = var.api_host
+    }
+  ]
 }
 
 ##################################################
@@ -87,7 +102,10 @@ module "api" {
 ##################################################
 
 module "argocd" {
-  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
+  depends_on = [
+    module.ingress
+  ]
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.2.0"
 
   name = "argocd"
 
@@ -96,7 +114,7 @@ module "argocd" {
 
   repository    = "https://argoproj.github.io/argo-helm/"
   chart_name    = "argo-cd"
-  chart_version = "4.5.11"
+  chart_version = var.argocd_charts_version
 
   values_files = ["charts/argocd/values.yaml"]
 }
@@ -107,8 +125,11 @@ module "argocd" {
 ##################################################
 
 module "db_tunneller" {
+  depends_on = [
+    module.database
+  ]
   count  = var.install_db_tunneller ? 1 : 0
-  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.1.0"
+  source = "git::https://github.com/the-bob/helm-module.git?ref=v0.2.0"
 
   name = "db-tunneller"
 
@@ -117,7 +138,7 @@ module "db_tunneller" {
 
   repository    = "https://charts.helm.sh/stable/"
   chart_name    = "socat-tunneller"
-  chart_version = "0.1.2"
+  chart_version = var.socat_tunneller_charts_version
 
   set = [
     {
