@@ -10,14 +10,14 @@ app = FastAPI()
 def read_db():
     host = os.getenv('MYSQL_HOST')
     user = os.getenv('MYSQL_USER')
-    password = os.getenv('MYSQL_PASS')
+    passwd = os.getenv('MYSQL_PASS')
     database = os.getenv('MYSQL_DB')
     print("host, user, database {} {} {}".format(host, user, database))
 
 
     connection = pymysql.connect(host=host,
-                                user=user',
-                                password=password,
+                                user=user,
+                                password=passwd,
                                 database=database,
                                 cursorclass=pymysql.cursors.DictCursor)
 
