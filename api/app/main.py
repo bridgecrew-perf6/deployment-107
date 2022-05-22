@@ -13,13 +13,21 @@ def read_db():
     password = os.getenv('MYSQL_PASS')
     database = os.getenv('MYSQL_DB')
     print("host, user, database {} {} {}".format(host, user, database))
-    connection = pymysql.connect(host, user, password, database)
+
+
+    connection = pymysql.connect(host='localhost',
+                                user='user',
+                                password='passwd',
+                                database='db',
+                                cursorclass=pymysql.cursors.DictCursor)
+
     with connection:
-        cur = connection.cursor()
-        cur.execute("SELECT VERSION()")
-        version = cur.fetchone()
-        print("Database version: {} ".format(version[0]))
-        return {"version": version[0]}
+        with connection.cursor() as cursor:
+            sql = "SELECT VERSION()"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            print(result)
+            return {"version": result[0]}
 
 @app.get("/")
 def read_root():
