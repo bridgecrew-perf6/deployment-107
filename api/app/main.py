@@ -6,13 +6,13 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-host = os.getenv('MYSQL_HOST')
-user = os.getenv('MYSQL_USER')
-password = os.getenv('MYSQL_PASS')
-database = os.getenv('MYSQL_DB')
-
 @app.get("/rds")
 def read_db():
+    host = os.getenv('MYSQL_HOST')
+    user = os.getenv('MYSQL_USER')
+    password = os.getenv('MYSQL_PASS')
+    database = os.getenv('MYSQL_DB')
+    print("host, user, database {} {} {}".format(host, user, database))
     connection = pymysql.connect(host, user, password, database)
     with connection:
         cur = connection.cursor()
@@ -20,7 +20,6 @@ def read_db():
         version = cur.fetchone()
         print("Database version: {} ".format(version[0]))
         return {"version": version[0]}
-    return {"ERROR"}    
 
 @app.get("/")
 def read_root():
