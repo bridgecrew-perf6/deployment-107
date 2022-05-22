@@ -27,7 +27,7 @@ def read_db():
             cursor.execute(sql)
             result = cursor.fetchone()
             print(result)
-            return {"version": result[0]}
+            return result
 
 @app.get("/")
 def read_root():
