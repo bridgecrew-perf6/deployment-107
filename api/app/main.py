@@ -15,10 +15,10 @@ def read_db():
     print("host, user, database {} {} {}".format(host, user, database))
 
 
-    connection = pymysql.connect(host='localhost',
-                                user='user',
-                                password='passwd',
-                                database='db',
+    connection = pymysql.connect(host=host,
+                                user=user',
+                                password=password,
+                                database=database,
                                 cursorclass=pymysql.cursors.DictCursor)
 
     with connection:
